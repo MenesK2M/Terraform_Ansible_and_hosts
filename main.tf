@@ -55,6 +55,7 @@ resource "null_resource" "control" {
 
   provisioner "remote-exec" {
     inline = [
+      "set -x",
       "sudo hostnamectl set-hostname master",
       "sleep 60",
       "chmod 700 /home/ec2-user/control-node.sh",
