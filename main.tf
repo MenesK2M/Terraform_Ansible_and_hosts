@@ -2,7 +2,7 @@ resource "aws_instance" "ansible" {
   ami           = data.aws_ami.amz-ami-ansible.id
   instance_type = var.instance_type
   key_name      = var.key_name_linux
-  count         = 4
+  count         = 3
   tags = {
     "Name" = "ansible_server-${count.index + 1}"
   }
@@ -61,6 +61,7 @@ resource "null_resource" "control" {
       "chmod 700 /home/ec2-user/control-node.sh",
       "bash -x /home/ec2-user/control-node.sh",
       "sudo mv /home/ec2-user/hosts /etc/ansible/",
+      "sudo chown -R root: /etc/ansible/hosts",
       "sudo mkdir /home/ansadmin/.ssh",
       "sudo mv /home/ec2-user/id_rsa /home/ansadmin/.ssh/",
       "sudo mv /home/ec2-user/id_rsa.pub /home/ansadmin/.ssh/",
